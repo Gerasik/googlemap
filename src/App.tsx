@@ -1,26 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useRef, ReactElement } from "react"
+import { Wrapper, Status } from "@googlemaps/react-wrapper"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const render = (status: Status): ReactElement => {
+  if (status === Status.LOADING) return <h3>{status} ..</h3>
+  if (status === Status.FAILURE) return <h3>{status} ...</h3>
+  return <></>
 }
 
-export default App;
+function MyMapComponent({
+  center,
+  zoom,
+}: {
+  center: google.maps.LatLngLiteral
+  zoom: number
+}) {
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    new window.google.maps.Map(ref.current as Element, {
+      center,
+      zoom,
+    })
+  })
+
+  return <div ref={ref} id="map" />
+}
+
+const App = () => {
+  const center = { lat: -34.397, lng: 150.644 }
+  const zoom = 4
+
+  return (
+    <Wrapper apiKey="" render={render}>
+      <MyMapComponent center={center} zoom={zoom} />
+    </Wrapper>
+  )
+}
+
+export default App
