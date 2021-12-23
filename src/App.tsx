@@ -17,7 +17,7 @@ function MyMapComponent({
   const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    new window.google.maps.Map(ref.current as Element, {
+    new window.google.maps.Map(ref.current as HTMLDivElement, {
       center,
       zoom,
     })
@@ -31,7 +31,7 @@ const App = () => {
   const zoom = 4
 
   return (
-    <Wrapper apiKey="" render={render}>
+    <Wrapper apiKey="AIzaSyBQfTJZ-cN-0xOlq18w1WvyzTPtKhlmN8s" render={render}>
       <MyMapComponent center={center} zoom={zoom} />
     </Wrapper>
   )
